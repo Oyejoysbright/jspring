@@ -10,11 +10,13 @@ import org.jpc.jspring.utils.Helper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpMethod;
 
+import com.flutterwave.rave.java.entry.Refund;
 import com.flutterwave.rave.java.entry.cardPayment;
 import com.flutterwave.rave.java.entry.tokenCharge;
 import com.flutterwave.rave.java.entry.transValidation;
 import com.flutterwave.rave.java.entry.validateCardCharge;
 import com.flutterwave.rave.java.payload.cardLoad;
+import com.flutterwave.rave.java.payload.refundPayload;
 import com.flutterwave.rave.java.payload.tokenChargePayload;
 import com.flutterwave.rave.java.payload.transverifyPayload;
 import com.flutterwave.rave.java.payload.validateCardPayload;
@@ -68,7 +70,7 @@ public class PayWithCard {
     public Response verifyTxId(int transactionId) {
         try {
             rawResponse = Helper.REST_CONNECTOR.exchange(
-                FlutterEndPointEnum.VERIFICATION.forTxVerification(transactionId),
+                FlutterEndPointEnum.TX_VERIFICATION.forTxVerification(transactionId),
                 FlutterwavePayment.config.getHttpEntity(), HttpMethod.GET).getBody();
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,5 +98,17 @@ public class PayWithCard {
         flwPayload.setEmail(payload.getEmailAddress());
         rawResponse = new tokenCharge().dotokenizedcharge(flwPayload);
         return Helper.buildFlutterwaveResponse(rawResponse, false);
+    }
+
+    public Response refund(String ref, Object amount) {
+        refundPayload flwPayload = new refundPayload();
+
+        flwPayload.setSeckey(FlutterwavePayment.config.getSecKey());
+
+        flwPayload.setAmount(amount.toString());
+        flwPayload.setRef(ref);
+        
+        rawResponse = new Refund().dorefund(flwPayload);
+        return Helper.buildFlutterwaveResponse(rawResponse, true);
     }
 }
