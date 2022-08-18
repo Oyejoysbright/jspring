@@ -8,9 +8,6 @@ import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class BankAccountManager {
     private String rawResponse = null;
 

@@ -13,6 +13,8 @@ public class FlutterwavePayment {
     public final PayWithCard payWithCard = new PayWithCard();
     public final PayWithMoMo payWithMoMo = new PayWithMoMo();
     public final OtpManager otpManager = new OtpManager();
+    public final BankAccountManager bankAccountManager = new BankAccountManager();
+    public final TransferManager transferManager = new TransferManager();
     
     public static FlutterwavePayment initiate(CountryCodeEnum countryCode, CurrencyEnum defaultCurrency, String...keys) {
         FlutterwavePayment.instance = new FlutterwavePayment();
