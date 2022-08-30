@@ -38,10 +38,12 @@ public class Helper {
             try {
                 HashMap<String, Object> flwResData = (HashMap) response.getData();
                 HashMap<String, Object> flwResDataData = null;
-                if (flwResData != null && flwResData.size() == 0) {
-                    response.setHasError(true);
+                if (flwResData != null) {
+                    flwResDataData = (HashMap) flwResData.get("data");
+                    if (flwResData.isEmpty()) {
+                    response.setHasError(true);                        
+                    }
                 }
-                flwResDataData = (HashMap) flwResData.get("data");
                 if ( flwResDataData != null) {
                     if(((String) flwResDataData.get("responsemessage")).equalsIgnoreCase("successful")) {
                         response.setHasError(false);
