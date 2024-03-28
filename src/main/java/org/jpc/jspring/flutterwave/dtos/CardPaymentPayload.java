@@ -26,10 +26,10 @@ public class CardPaymentPayload {
     private String deviceFingerprint;
     private String pin;
     private String suggestedAuth = "PIN";
-    private String billingZip;
-    private String billingCity;
-    private String billingAddress;
-    private String billingState;
-    private String billingCountry;
+    private String billingzip;
+    private String billingcity;
+    private String billingaddress;
+    private String billingstate;
+    private String billingcountry;
     private String test;
 }

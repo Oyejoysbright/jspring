@@ -2,6 +2,7 @@ package org.jpc.jspring.flutterwave;
 
 import java.net.UnknownHostException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jpc.jspring.core.Response;
 import org.jpc.jspring.enums.FlutterEndPointEnum;
 import org.jpc.jspring.flutterwave.dtos.CardPaymentPayload;
@@ -22,6 +23,7 @@ import com.flutterwave.rave.java.payload.transverifyPayload;
 import com.flutterwave.rave.java.payload.validateCardPayload;
 
 @SuppressWarnings({"rawTypes"})
+@Slf4j
 public class PayWithCard {
 
     private String rawResponse = null;
@@ -47,12 +49,13 @@ public class PayWithCard {
         flwPayload.setRedirect_url(payload.getRedirectUrl());
         flwPayload.setDevice_fingerprint(payload.getDeviceFingerprint());
         flwPayload.setSuggested_auth(payload.getSuggestedAuth());
-        flwPayload.setBillingaddress(payload.getBillingAddress());
-        flwPayload.setBillingcity(payload.getBillingCity());
-        flwPayload.setBillingcountry(payload.getBillingCountry());
-        flwPayload.setBillingstate(payload.getBillingState());
-        flwPayload.setBillingzip(payload.getBillingZip());
+        flwPayload.setBillingaddress(payload.getBillingaddress());
+        flwPayload.setBillingcity(payload.getBillingcity());
+        flwPayload.setBillingcountry(payload.getBillingcountry());
+        flwPayload.setBillingstate(payload.getBillingstate());
+        flwPayload.setBillingzip(payload.getBillingzip());
 
+        log.info("PAYLOAD ::::::: " + Helper.anyToString(flwPayload));
         rawResponse = new cardPayment().doflwcardpayment(flwPayload);
         return Helper.buildFlutterwaveResponse(rawResponse, false);
     }
@@ -96,6 +99,8 @@ public class PayWithCard {
         flwPayload.setFirstname(payload.getFirstName());
         flwPayload.setLastname(payload.getLastName());
         flwPayload.setEmail(payload.getEmailAddress());
+        flwPayload.setCountry(FlutterwavePayment.config.getCountryCode());
+        log.info("PAYLOAD ::::::: " + Helper.anyToString(flwPayload));
         rawResponse = new tokenCharge().dotokenizedcharge(flwPayload);
         return Helper.buildFlutterwaveResponse(rawResponse, false);
     }
